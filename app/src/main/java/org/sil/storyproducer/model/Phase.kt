@@ -9,12 +9,14 @@ import org.sil.storyproducer.controller.learn.LearnActivity
 import org.sil.storyproducer.controller.pager.PagerBaseActivity
 import org.sil.storyproducer.controller.remote.WholeStoryBackTranslationActivity
 
+
 enum class PhaseType {
     WORKSPACE,
     REGISTRATION,
     STORY_LIST,
     LEARN,
     TRANSLATE_REVISE,
+    WORD_LINKS,
     COMMUNITY_WORK,
     ACCURACY_CHECK,
     VOICE_STUDIO,
@@ -37,43 +39,19 @@ class Phase (val phaseType: PhaseType) {
     fun getIcon(phase: PhaseType = phaseType) : Int {
         return when (phase){
             PhaseType.LEARN -> R.drawable.ic_ear_speak
-            PhaseType.TRANSLATE_REVISE -> R.drawable.ic_mic_white_48dp
-            PhaseType.FINALIZE -> R.drawable.ic_video_call_white_48dp
-            PhaseType.SHARE -> R.drawable.ic_share_icon_v2_white
-            PhaseType.COMMUNITY_WORK -> R.drawable.ic_people_white_48dp
-            PhaseType.ACCURACY_CHECK -> R.drawable.ic_school_white_48dp
+            PhaseType.DRAFT -> R.drawable.ic_mic_white_48dp
+            PhaseType.CREATE -> R.drawable.ic_video_call_white_48dp
+            PhaseType.SHARE -> R.drawable.ic_share_white_48dp
+            PhaseType.COMMUNITY_CHECK -> R.drawable.ic_people_white_48dp
+            PhaseType.CONSULTANT_CHECK -> R.drawable.ic_school_white_48dp
             PhaseType.WHOLE_STORY -> R.drawable.ic_school_white_48dp
             PhaseType.REMOTE_CHECK -> R.drawable.ic_school_white_48dp
-            PhaseType.BACK_T -> R.drawable.ic_headset_mic_white_48dp
-            PhaseType.VOICE_STUDIO -> R.drawable.ic_mic_box_48dp
+            PhaseType.BACKT -> R.drawable.ic_headset_mic_white_48dp
+            PhaseType.DRAMATIZATION -> R.drawable.ic_mic_box_48dp
             else -> R.drawable.ic_mic_white_48dp
         }
     }
 
-    /**
-     * get the color associated with a phase
-     * @return color
-     */
-    fun getColor() : Int {
-        return when(phaseType){
-            PhaseType.LEARN -> R.color.learn_phase
-            PhaseType.TRANSLATE_REVISE -> R.color.translate_revise_phase
-            PhaseType.COMMUNITY_WORK -> R.color.comunity_work_phase
-            PhaseType.ACCURACY_CHECK -> R.color.accuracy_check_phase
-            PhaseType.VOICE_STUDIO -> R.color.voice_studio_phase
-            PhaseType.FINALIZE -> R.color.finalize_phase
-            PhaseType.SHARE -> R.color.share_phase
-            PhaseType.BACK_T -> R.color.backT_phase
-            PhaseType.WHOLE_STORY -> R.color.whole_story_phase
-            PhaseType.REMOTE_CHECK -> R.color.remote_check_phase
-            else -> R.color.black
-        }
-    }
-
-    /**
-     * get path of audio file needed by slide, based on the current phase (narration or a draft)
-     * @return String
-     */
     fun getReferenceAudioFile(slideNum: Int = Workspace.activeSlideNum) : String {
         val filename = when (phaseType){
             PhaseType.TRANSLATE_REVISE -> Workspace.activeStory.slides[slideNum].narrationFile
