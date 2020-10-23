@@ -44,7 +44,7 @@ class WLSTree {
      * @param text the text containing keyterms
      * @return A List of Strings
      */
-    fun splitOnKeyterms(text: String): List<String>{
+    fun splitOnWordLinks(text: String): List<String>{
         val words = splitBeforeAndAfterAnyNonLetters(text)
         val resultPhrases: MutableList<String> = mutableListOf()
         var nonKeytermPhrase = ""
