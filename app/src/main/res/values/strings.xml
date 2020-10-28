@@ -168,6 +168,19 @@
     <string name="voice_studio_edit_text_hint">Write story text for videos with included text.</string>
     <string name="voice_studio_edit_title_text_hint">Write story title to show for all videos made.</string>
 
+    <!-- WordLink Tool -->
+    <string name="wordlink_submit_backtranslation_hint">word-for-word backtranslation / transliteration</string>
+    <string name="wordlink_close">Close</string>
+    <string name="wordlink_notes">MEANING NOTES. DEFINITIONS:</string>
+    <string name="wordlink_related_terms">RELATED (BUT DIFFERENT) TERMS:</string>
+    <string name="wordlink_other_langauge_examples">OTHER LANGUAGE EXAMPLES:</string>
+    <string name="wordlink_fill_with_audio_comment">Fill with Audio Comment</string>
+    <string name="wordlink_backtranslation">Backtranslation</string>
+
+    <!-- Dramatization phase -->
+    <string name="dramatization_edit_text_hint">Write story text for videos with included text.</string>
+    <string name="dramatization_edit_title_text_hint">Write story title to show for all videos made.</string>
+
     <!-- Share Phase -->
     <string name="delete_video_title">Delete Video file?</string>
     <string name="delete_video_message">Do you want to delete this video?</string>

@@ -2,6 +2,12 @@ import com.opencsv.CSVReader
 import org.sil.storyproducer.model.WordLink
 import java.io.Reader
 
+/**
+ * The purpose of this class is to parse wordlink data from a csv file and load into a list of WordLink objects
+ *
+ * @since 3.1
+ * @authors Aaron Cannon, Jake Allinson
+ */
 class WordLinkCSVReader(reader: Reader): AutoCloseable {
     private val csvReader = CSVReader(reader)
 
