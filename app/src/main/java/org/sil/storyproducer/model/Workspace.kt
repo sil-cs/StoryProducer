@@ -30,7 +30,8 @@ internal const val PHASE = "Phase"
 internal const val WORDLINKS_DIR = "wordlinks"
 internal const val WORDLINKS_CSV_FILE = "wordlinks.csv"
 internal const val WORDLINKS_JSON_FILE = "wordlinks.json"
-internal const val WORDLINKS_CLICKED_TERM = ""
+internal const val WORDLINKS_CLICKED_TERM = "ClickedTerm"
+internal const val WORDLINKS_SLIDE_NUM = "CurrentSlideNum"
 
 object Workspace {
     var workdocfile = DocumentFile.fromFile(File(""))

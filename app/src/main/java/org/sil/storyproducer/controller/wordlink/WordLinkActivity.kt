@@ -1,19 +1,25 @@
 package org.sil.storyproducer.controller.wordlink
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
+import android.webkit.WebView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import org.sil.storyproducer.R
 import org.sil.storyproducer.controller.adapter.RecordingsListAdapter
-import org.sil.storyproducer.model.Phase
-import org.sil.storyproducer.model.PhaseType
-import org.sil.storyproducer.model.Workspace
+import org.sil.storyproducer.model.*
 import org.sil.storyproducer.tools.toolbar.PlayBackRecordingToolbar
 import java.util.*
 
@@ -34,14 +40,10 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
         wordLinkHistory.push(term)
 
         setupStatusBar()
-
         setupToolbar(getApplicationContext())
-
-//        setupBottomSheet()
-//
-//        setupNoteView()
-//
-//        setupRecordingList()
+        // setupBottomSheet()
+        setupNoteView()
+        // setupRecordingList()
 
         // Keeps keyboard from automatically popping up on opening activity
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -84,84 +86,97 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
 //        displayList.show()
 //    }
 //
-//    /**
-//     * Updates the textViews with the current keyterm information
-//     */
-//    // TODO Refactor out recording toolbar stuff
-//    private fun setupNoteView(){
-//        val actionBar = supportActionBar
-//
-//        actionBar?.title = keytermHistory.peek()
-//
-//        val keyTermTitleView = findViewById<TextView>(R.id.keyterm_title)
-//        var titleText = ""
-//        if(Workspace.activeKeyterm.term.toLowerCase() != keytermHistory.peek().toLowerCase()) {
-//            titleText = Workspace.activeKeyterm.term
-//        }
-//        for (termForm in Workspace.activeKeyterm.termForms){
-//            if(termForm != keytermHistory.peek()) {
-//                if (titleText.isNotEmpty()) {
-//                    titleText += " / $termForm"
-//                }
-//                else{
-//                    titleText = termForm
-//                }
-//            }
-//        }
-//        if(titleText == ""){
-//            keyTermTitleView.visibility = View.GONE
-//        }
-//        else {
-//            keyTermTitleView.visibility = View.VISIBLE
-//            keyTermTitleView.text = titleText
-//        }
-//
-//        val explanationView = findViewById<TextView>(R.id.explanation_text)
-//        explanationView.text = Workspace.activeKeyterm.explanation
-//
-//        val relatedTermsView = findViewById<TextView>(R.id.related_terms_text)
-//        relatedTermsView.text = Workspace.activeKeyterm.relatedTerms.fold(SpannableStringBuilder()){
-//            result, relatedTerm -> result.append(stringToKeytermLink(relatedTerm, this)).append("   ")
-//        }
-//        relatedTermsView.movementMethod = LinkMovementMethod.getInstance()
-//
-//        val alternateRenderingsView = findViewById<TextView>(R.id.alternate_renderings_text)
-//        alternateRenderingsView.text = Workspace.activeKeyterm.alternateRenderings.fold(""){
-//            result, alternateRendering -> "$result\u2022 $alternateRendering\n"
-//        }.removeSuffix("\n")
-//
+    /**
+     * Updates the textViews with the current keyterm information
+     */
+    private fun setupNoteView() {
+        val actionBar = supportActionBar
+
+        actionBar?.title = wordLinkHistory.peek()
+
+        val wordLinkTitleView = findViewById<TextView>(R.id.wordlink_title)
+        var titleText = ""
+        if(Workspace.activeWordLink.term.toLowerCase() != wordLinkHistory.peek().toLowerCase()) {
+            titleText = Workspace.activeWordLink.term
+        }
+        // make breadcrumb path
+        for (termForm in Workspace.activeWordLink.termForms){
+            if(termForm != wordLinkHistory.peek()) {
+                if (titleText.isNotEmpty()) {
+                    titleText += " / $termForm"
+                }
+                else{
+                    titleText = termForm
+                }
+            }
+        }
+        if(titleText == ""){
+            wordLinkTitleView.visibility = View.GONE
+        }
+        else {
+            wordLinkTitleView.visibility = View.VISIBLE
+            wordLinkTitleView.text = titleText
+        }
+
+        val explanationView = findViewById<TextView>(R.id.explanation_text)
+        explanationView.text = Workspace.activeWordLink.explanation
+
+        val relatedTermsView = findViewById<TextView>(R.id.related_terms_text)
+        relatedTermsView.text = Workspace.activeWordLink.relatedTerms.fold(SpannableStringBuilder()){
+            result, relatedTerm -> result.append(stringToWordLink(relatedTerm, this)).append("   ")
+        }
+        relatedTermsView.movementMethod = LinkMovementMethod.getInstance()
+
+        val alternateRenderingsView = findViewById<TextView>(R.id.alternate_renderings_text)
+        alternateRenderingsView.text = Workspace.activeWordLink.alternateRenderings.fold(""){
+            result, alternateRendering -> "$result\u2022 $alternateRendering\n"
+        }.removeSuffix("\n")
+
 //        val bundle = Bundle()
-//        bundle.putInt(SLIDE_NUM, 0)
+//        bundle.putInt(WORDLINKS_SLIDE_NUM, 0)
 //        recordingToolbar = KeytermRecordingToolbar()
 //        recordingToolbar.arguments = bundle
 //        supportFragmentManager.beginTransaction().replace(R.id.toolbar_for_recording_toolbar, recordingToolbar).commit()
-//    }
+    }
 //
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.menu_keyterm_view, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.closeKeyterm -> {
-//                saveKeyterm()
-//                if(intent.hasExtra(PHASE)) {
-//                    Workspace.activePhase = Phase(intent.getSerializableExtra(PHASE) as PhaseType)
-//                }
-//                finish()
-//                true
-//            }
-//            R.id.helpButton -> {
-//                helpDialog(this, "${Workspace.activePhase.getPrettyName()} Help").show()
-//                true
-//            }
-//            else -> {
-//                onBackPressed()
-//                true
-//            }
-//        }
-//    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_wordlink_view, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.closeWordLink -> {
+                // saveKeyterm()
+                if(intent.hasExtra(PHASE)) {
+                    Workspace.activePhase = Phase(intent.getSerializableExtra(PHASE) as PhaseType)
+                }
+                finish()
+                true
+            }
+            R.id.helpButton -> {
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("${Workspace.activePhase.getPrettyName()} Help")
+
+                val wv = WebView(this)
+                val iStream = assets.open(Phase.getHelpName(Workspace.activePhase.phaseType))
+                val text = iStream.reader().use {
+                    it.readText()
+                }
+                wv.loadDataWithBaseURL(null,text,"text/html",null,null)
+                alert.setView(wv)
+                alert.setNegativeButton("Close") { dialog, _ ->
+                    dialog!!.dismiss()
+                }
+                alert.show()
+                true
+            }
+            else -> {
+                onBackPressed()
+                true
+            }
+        }
+    }
 //
 //    override fun onStoppedToolbarRecording() {
 //        val recordingExpandableListView = findViewById<RecyclerView>(R.id.recordings_list)
@@ -181,11 +196,11 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
 //        displayList.resetRecordingList()
 //    }
 //
-//    /**
-//     * When the back button is pressed, the bottom sheet will close if currently opened or return to
-//     * the previous keyterm or close the activity if there is no previous keyterm to return to
-//     */
-//    override fun onBackPressed() {
+    /**
+     * When the back button is pressed, the bottom sheet will close if currently opened or return to
+     * the previous keyterm or close the activity if there is no previous keyterm to return to
+     */
+    override fun onBackPressed() {
 //        if( from(bottomSheet).state == STATE_EXPANDED){
 //            from(bottomSheet).state = STATE_COLLAPSED
 //        }
@@ -196,16 +211,16 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
 //                if(intent.hasExtra(PHASE)) {
 //                    Workspace.activePhase = Phase(intent.getSerializableExtra(PHASE) as PhaseType)
 //                }
-//                super.onBackPressed()
-//                finish()
+                super.onBackPressed()
+                finish()
 //            } else {
 //                Workspace.activeKeyterm = Workspace.termToKeyterm[Workspace.termFormToTerm[keytermHistory.peek().toLowerCase()]]!!
 //                setupNoteView()
 //                setupRecordingList()
 //            }
 //        }
-//    }
-//
+    }
+
     fun replaceActivityWordLink(term: String) {
 //        saveWordLink()
 //        //Set keyterm from link as active keyterm
