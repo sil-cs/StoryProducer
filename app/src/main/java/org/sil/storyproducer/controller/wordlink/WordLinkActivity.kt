@@ -87,19 +87,19 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
 //    }
 //
     /**
-     * Updates the textViews with the current keyterm information
+     * Updates the textViews with the current wordlink information
      */
     private fun setupNoteView() {
         val actionBar = supportActionBar
 
-        actionBar?.title = wordLinkHistory.peek()
+        actionBar?.title = wordLinkHistory.peek().toUpperCase();
 
         val wordLinkTitleView = findViewById<TextView>(R.id.wordlink_title)
         var titleText = ""
         if(Workspace.activeWordLink.term.toLowerCase() != wordLinkHistory.peek().toLowerCase()) {
             titleText = Workspace.activeWordLink.term
         }
-        // make breadcrumb path
+        // format
         for (termForm in Workspace.activeWordLink.termForms){
             if(termForm != wordLinkHistory.peek()) {
                 if (titleText.isNotEmpty()) {
@@ -122,10 +122,14 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
         explanationView.text = Workspace.activeWordLink.explanation
 
         val relatedTermsView = findViewById<TextView>(R.id.related_terms_text)
-        relatedTermsView.text = Workspace.activeWordLink.relatedTerms.fold(SpannableStringBuilder()){
-            result, relatedTerm -> result.append(stringToWordLink(relatedTerm, this)).append("   ")
+        if (Workspace.activeWordLink.relatedTerms.isEmpty()) {
+            relatedTermsView.setText(R.string.wordlink_none);
+        } else {
+            relatedTermsView.text = Workspace.activeWordLink.relatedTerms.fold(SpannableStringBuilder()) {
+                result, relatedTerm -> result.append(stringToWordLink(relatedTerm, this)).append("   ")
+            }
+            relatedTermsView.movementMethod = LinkMovementMethod.getInstance()
         }
-        relatedTermsView.movementMethod = LinkMovementMethod.getInstance()
 
         val alternateRenderingsView = findViewById<TextView>(R.id.alternate_renderings_text)
         alternateRenderingsView.text = Workspace.activeWordLink.alternateRenderings.fold(""){
@@ -222,14 +226,14 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
     }
 
     fun replaceActivityWordLink(term: String) {
-//        saveWordLink()
-//        //Set keyterm from link as active keyterm
-//        Workspace.activeKeyterm = Workspace.termToKeyterm[Workspace.termFormToTerm[term.toLowerCase()]]!!
-//        //Add new keyterm fragments to stack
-//        keytermHistory.push(term)
-//        setupNoteView()
-//        setupRecordingList()
-//        from(bottomSheet).state = STATE_COLLAPSED
+        // saveWordLink()
+        // Set keyterm from link as active keyterm
+        Workspace.activeWordLink = Workspace.termToWordLinkMap[Workspace.termFormToTermMap[term.toLowerCase()]]!!
+        //Add new keyterm fragments to stack
+        wordLinkHistory.push(term)
+        setupNoteView()
+        //setupRecordingList()
+        //from(bottomSheet).state = STATE_COLLAPSED
     }
 //
 //    /**
