@@ -42,6 +42,7 @@
     <string name="whole_story_title">Whole Story Back Translation</string>
     <string name="back_translation_title">Back Translation</string>
     <string name="title_activity_story_templates">Story Templates</string>
+    <string name="title_activity_wordlink_list">Word Links List</string>
 
     <!-- String names for registration -->
     <string name="registration_language_header">Language Information</string>

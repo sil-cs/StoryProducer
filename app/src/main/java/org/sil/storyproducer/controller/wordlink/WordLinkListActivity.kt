@@ -1,14 +1,16 @@
-/*
+
 package org.sil.storyproducer.controller.wordlink
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.view.*
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,24 +23,25 @@ import org.sil.storyproducer.controller.WorkspaceUpdateActivity
 import org.sil.storyproducer.model.WORDLINKS_CLICKED_TERM
 import org.sil.storyproducer.model.PHASE
 import org.sil.storyproducer.model.Workspace
+import org.sil.storyproducer.model.Workspace.termFormToTermMap
 import org.sil.storyproducer.model.Workspace.termToWordLinkMap
 
-class KeyTermListActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
-    private lateinit var recyclerView: RecyclerView
+class WordLinkListActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
+    private lateinit var recyclerView: RecyclerView
     private var mDrawerLayout: DrawerLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_key_term_list)
+        setContentView(R.layout.activity_wordlink_list)
 
-        val keytermList = termToKeyterm.keys.toTypedArray()
-        keytermList.sortWith(String.CASE_INSENSITIVE_ORDER)
+        val wordLinkList = termToWordLinkMap.keys.toTypedArray()
+        wordLinkList.sortWith(String.CASE_INSENSITIVE_ORDER)
 
         val viewManager = LinearLayoutManager(this)
-        val viewAdapter = KeytermListAdapter(keytermList, this)
+        val viewAdapter = WordLinkListAdapter(wordLinkList, this)
 
-        recyclerView = findViewById<RecyclerView>(R.id.keyterm_list).apply {
+        recyclerView = findViewById<RecyclerView>(R.id.wordlink_list).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
@@ -46,47 +49,47 @@ class KeyTermListActivity : AppCompatActivity(), SearchView.OnQueryTextListener 
 
         setupDrawer()
 
-        supportActionBar?.title = "Keyterm List"
+        supportActionBar?.setTitle(R.string.title_activity_wordlink_list)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_keyterm_list_view, menu)
+        menuInflater.inflate(R.menu.menu_wordlink_list_view, menu)
         val searchItem = menu.findItem(R.id.search_button)
         (searchItem.actionView as SearchView).setOnQueryTextListener(this)
 
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                mDrawerLayout!!.openDrawer(GravityCompat.START)
-                true
-            }
-            R.id.helpButton -> {
-                val alert = AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.help))
-                        .setMessage("Keyterm List Help")
-                        .create()
-                alert.show()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            android.R.id.home -> {
+//                mDrawerLayout!!.openDrawer(GravityCompat.START)
+//                true
+//            }
+//            R.id.helpButton -> {
+//                val alert = AlertDialog.Builder(this)
+//                        .setTitle(getString(R.string.help))
+//                        .setMessage("Keyterm List Help")
+//                        .create()
+//                alert.show()
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
     override fun onQueryTextSubmit(p0: String?): Boolean {
         return false
     }
 
     override fun onQueryTextChange(p0: String?): Boolean {
         val newList = ArrayList<String>()
-        for (keyterm in termToKeyterm.keys) {
-            if (keyterm.toLowerCase().contains(p0?.toLowerCase() ?: "")) {
-                newList.add(keyterm)
+        for (wl in termToWordLinkMap.keys) {
+            if (wl.toLowerCase().contains(p0?.toLowerCase() ?: "")) {
+                newList.add(wl)
             }
         }
         newList.sortWith(String.CASE_INSENSITIVE_ORDER)
-        recyclerView.swapAdapter(KeytermListAdapter(newList.toTypedArray(), this), true)
+        recyclerView.swapAdapter(WordLinkListAdapter(newList.toTypedArray(), this), true)
         recyclerView.scrollToPosition(0)
         return true
     }
@@ -125,9 +128,9 @@ class KeyTermListActivity : AppCompatActivity(), SearchView.OnQueryTextListener 
                     this.startActivity(intent)
                     this.finish()
                 }
-                R.id.nav_keyterm_list -> {
-                    // Current fragment
-                }
+//                R.id.nav_keyterm_list -> {
+//                    // Current fragment
+//                }
                 R.id.nav_registration -> {
                     intent = Intent(this, RegistrationActivity::class.java)
                     this.startActivity(intent)
@@ -138,41 +141,38 @@ class KeyTermListActivity : AppCompatActivity(), SearchView.OnQueryTextListener 
                     this.startActivity(intent)
                     this.finish()
                 }
-                R.id.nav_license -> {
-                    val dialog = AlertDialog.Builder(this)
-                            .setTitle(this.getString(R.string.license_title))
-                            .setMessage(this.getString(R.string.license_body))
-                            .setPositiveButton(this.getString(R.string.ok)) { _, _ -> }.create()
-                    dialog.show()
-                }
+//                R.id.nav_license -> {
+//                    val dialog = AlertDialog.Builder(this)
+//                            .setTitle(this.getString(R.string.license_title))
+//                            .setMessage(this.getString(R.string.license_body))
+//                            .setPositiveButton(this.getString(R.string.ok)) { _, _ -> }.create()
+//                    dialog.show()
+//                }
             }
             true
         }
     }
 }
 
-class KeytermListAdapter(private val keytermTerms: Array<String>, private val context: Context) : RecyclerView.Adapter<KeytermListAdapter.KeytermListViewHolder>() {
+class WordLinkListAdapter(private val wordLinkTerms: Array<String>, private val context: Context) : RecyclerView.Adapter<WordLinkListAdapter.WordLinkListViewHolder>() {
 
-    class KeytermListViewHolder(val item: View) : RecyclerView.ViewHolder(item)
+    class WordLinkListViewHolder(val item: View) : RecyclerView.ViewHolder(item)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KeytermListAdapter.KeytermListViewHolder {
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordLinkListAdapter.WordLinkListViewHolder {
         val rootView = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
-
-        return KeytermListViewHolder(rootView)
+        return WordLinkListViewHolder(rootView)
     }
 
-    override fun onBindViewHolder(keytermListViewHolder: KeytermListViewHolder, position: Int) {
-        val term = keytermTerms[position]
-        keytermListViewHolder.item.findViewById<TextView>(android.R.id.text1).text = term
-        keytermListViewHolder.item.setOnClickListener {
-            val intent = Intent(context , KeyTermActivity::class.java)
+    override fun onBindViewHolder(wordLinkListViewHolder: WordLinkListViewHolder, position: Int) {
+        val term = wordLinkTerms[position]
+        wordLinkListViewHolder.item.findViewById<TextView>(android.R.id.text1).text = term
+        wordLinkListViewHolder.item.setOnClickListener {
+            val intent = Intent(context , WordLinkActivity::class.java)
             intent.putExtra(PHASE, Workspace.activePhase.phaseType)
-            intent.putExtra(CLICKED_TERM, term)
+            intent.putExtra(WORDLINKS_CLICKED_TERM, term)
             context.startActivity(intent)
         }
     }
 
-    override fun getItemCount() = keytermTerms.size
+    override fun getItemCount() = wordLinkTerms.size
 }
-*/

@@ -19,6 +19,9 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.sil.storyproducer.R
+import org.sil.storyproducer.activity.BaseActivity
+import org.sil.storyproducer.controller.wordlink.WordLinkListActivity
+import org.sil.storyproducer.model.*
 import org.sil.storyproducer.activities.BaseActivity
 import org.sil.storyproducer.model.Phase
 import org.sil.storyproducer.model.PhaseType
@@ -141,7 +144,10 @@ class MainActivity : BaseActivity(), Serializable {
                 Workspace.addDemoToWorkspace(this)
                 storyList.notifyDataSetChanged()
             }
-
+            R.id.nav_wordlink_list -> {
+                intent = Intent(this, WordLinkListActivity::class.java)
+                this.startActivity(intent)
+            }
             R.id.nav_stories -> {
                 // Current fragment
             }
