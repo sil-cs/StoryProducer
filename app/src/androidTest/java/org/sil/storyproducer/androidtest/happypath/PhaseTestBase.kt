@@ -54,9 +54,7 @@ open abstract class PhaseTestBase {
                 }
                 source.copyRecursively(destination, true)
             } catch (e: Exception){
-                Assert.fail("Failed to copy pristine story template from test resources folder " +
-                        "to workspace folder. Ensure that Story Producer has the 'Storage' " +
-                        "permission.")
+                Assert.fail("Failed to copy pristine story template from test resources folder to workspace folder.")
             }
         }
 
