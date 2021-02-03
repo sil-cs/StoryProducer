@@ -14,7 +14,7 @@ object Constants {
     const val durationToRecordTranslatedClip: Long = durationToRecordLearnClip
     const val durationToRecordFeedbackClip: Long = 250
     const val durationToRecordVoiceStudioClip: Long = 250
-    const val durationToWaitForVideoExport: Long = 60000
+    const val durationToWaitForVideoExport: Long = 120000
     const val intervalToWaitBetweenCheckingForVideoExport: Long = 1000
 
     const val durationToWaitWhenSwipingBetweenSlides: Long = 200 //Swipe.FAST = 100 * 2
@@ -23,7 +23,7 @@ object Constants {
 
     const val nameOfTestStory = "Lost Coin"
 
-    const val nameOfTestStoryDirectory = "a000 Lost Coin Eng"
+    const val nameOfTestStoryDirectory = "002 Lost Coin"
     const val nameOfSampleExportVideo = "LostCoinSample.mp4"
 
     val storageRoots = arrayOf(
