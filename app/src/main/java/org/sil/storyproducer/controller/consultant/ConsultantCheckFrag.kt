@@ -201,7 +201,7 @@ class ConsultantCheckFrag : SlidePhaseFrag() {
         Toast.makeText(context, "Congrats!", Toast.LENGTH_SHORT).show()
         //Move to dramatization, slide 0.
         Workspace.activeSlideNum = 0
-        (activity as PhaseBaseActivity).jumpToPhase(Phase(PhaseType.DRAMATIZATION))
+        (activity as PhaseBaseActivity).jumpToPhase(Phase(PhaseType.VOICE_STUDIO))
     }
 
     /**

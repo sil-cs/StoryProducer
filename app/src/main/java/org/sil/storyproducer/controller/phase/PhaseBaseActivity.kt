@@ -13,7 +13,6 @@ import android.view.*
 import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -167,7 +166,7 @@ abstract class PhaseBaseActivity : BaseActivity(), AdapterView.OnItemSelectedLis
             }
             R.id.helpButton -> {
                 val alert = AlertDialog.Builder(this)
-                alert.setTitle("${Workspace.activePhase.getPrettyName()} Help")
+                alert.setTitle("${Workspace.activePhase.getDisplayName()} Help")
 
                 val wv = WebView(this)
                 val iStream = assets.open(Phase.getHelpName(Workspace.activePhase.phaseType))

@@ -3,7 +3,6 @@ package org.sil.storyproducer.controller.pager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import org.sil.storyproducer.controller.community.CommunityCheckFrag
 import org.sil.storyproducer.controller.consultant.ConsultantCheckFrag
 import org.sil.storyproducer.controller.draft.DraftFrag
@@ -27,16 +26,16 @@ class PagerAdapter(fm: FragmentManager) : androidx.fragment.app.FragmentStatePag
         val fragment: Fragment
         val passedArgs = Bundle()
         when (Workspace.activePhase.phaseType) {
-            PhaseType.DRAFT -> {
+            PhaseType.TRANSLATE_REVISE -> {
                 fragment = DraftFrag()
             }
-            PhaseType.COMMUNITY_CHECK -> {
+            PhaseType.COMMUNITY_WORK -> {
                 fragment = CommunityCheckFrag()
             }
-            PhaseType.CONSULTANT_CHECK -> {
+            PhaseType.ACCURACY_CHECK -> {
                 fragment = ConsultantCheckFrag()
             }
-            PhaseType.DRAMATIZATION -> {
+            PhaseType.VOICE_STUDIO -> {
                 fragment = DramatizationFrag()
             }
 //            PhaseType.BACKT -> {
