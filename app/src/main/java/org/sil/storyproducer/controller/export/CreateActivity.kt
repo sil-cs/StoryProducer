@@ -105,7 +105,7 @@ class CreateActivity : PhaseBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create)
+        setContentView(R.layout.activity_finalize)
         setupViews()
         invalidateOptionsMenu()
         if (Workspace.activeStory.isApproved) {

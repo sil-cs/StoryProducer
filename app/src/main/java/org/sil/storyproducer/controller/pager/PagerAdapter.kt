@@ -3,10 +3,10 @@ package org.sil.storyproducer.controller.pager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import org.sil.storyproducer.controller.community.CommunityCheckFrag
-import org.sil.storyproducer.controller.consultant.ConsultantCheckFrag
-import org.sil.storyproducer.controller.draft.DraftFrag
-import org.sil.storyproducer.controller.dramatization.DramatizationFrag
+import org.sil.storyproducer.controller.communitywork.CommunityWorkFrag
+import org.sil.storyproducer.controller.accuracycheck.AccuracyCheckFrag
+import org.sil.storyproducer.controller.translaterevise.TranslateReviseFrag
+import org.sil.storyproducer.controller.voicestudio.VoiceStudioFrag
 import org.sil.storyproducer.controller.remote.RemoteCheckFrag
 import org.sil.storyproducer.model.PhaseType
 import org.sil.storyproducer.model.SLIDE_NUM
@@ -27,25 +27,25 @@ class PagerAdapter(fm: FragmentManager) : androidx.fragment.app.FragmentStatePag
         val passedArgs = Bundle()
         when (Workspace.activePhase.phaseType) {
             PhaseType.TRANSLATE_REVISE -> {
-                fragment = DraftFrag()
+                fragment = TranslateReviseFrag()
             }
             PhaseType.COMMUNITY_WORK -> {
-                fragment = CommunityCheckFrag()
+                fragment = CommunityWorkFrag()
             }
             PhaseType.ACCURACY_CHECK -> {
-                fragment = ConsultantCheckFrag()
+                fragment = AccuracyCheckFrag()
             }
             PhaseType.VOICE_STUDIO -> {
-                fragment = DramatizationFrag()
+                fragment = VoiceStudioFrag()
             }
-//            PhaseType.BACKT -> {
+//            PhaseType.BACK_TRANSLATION -> {
 //                fragment = BackTranslationFrag()
 //            }
             PhaseType.REMOTE_CHECK -> {
                 fragment = RemoteCheckFrag()
             }
             else -> {
-                fragment = DraftFrag()
+                fragment = TranslateReviseFrag()
             }
         }
         passedArgs.putInt(SLIDE_NUM, i)

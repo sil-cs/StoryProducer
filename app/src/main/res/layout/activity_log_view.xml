@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:checked="true"
-                    android:text="@string/draft_title" />
+                    android:text="@string/translate_revise_title" />
             </FrameLayout>
 
             <FrameLayout
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:checked="true"
-                    android:text="@string/community_check_title" />
+                    android:text="@string/community_work_title" />
             </FrameLayout>
 
         </LinearLayout>
