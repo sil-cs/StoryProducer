@@ -9,16 +9,26 @@ import org.sil.storyproducer.controller.learn.LearnActivity
 import org.sil.storyproducer.controller.pager.PagerBaseActivity
 import org.sil.storyproducer.controller.remote.WholeStoryBackTranslationActivity
 
-
 enum class PhaseType {
-    WORKSPACE, REGISTRATION, STORY_LIST, LEARN, DRAFT, COMMUNITY_CHECK, CONSULTANT_CHECK, DRAMATIZATION, CREATE, SHARE, BACKT, WHOLE_STORY, REMOTE_CHECK
+    WORKSPACE,
+    REGISTRATION,
+    STORY_LIST,
+    LEARN,
+    DRAFT,
+    COMMUNITY_CHECK,
+    CONSULTANT_CHECK,
+    DRAMATIZATION,
+    CREATE,
+    SHARE,
+    BACKT,
+    WHOLE_STORY,
+    REMOTE_CHECK
 }
 
 /**
  * The business object for phases that are part of the story
  */
 class Phase(val phaseType: PhaseType) {
-
 
     fun getCombNames(slideNum:Int = Workspace.activeSlideNum) : MutableList<String>?{
         return when (phaseType){
@@ -30,6 +40,10 @@ class Phase(val phaseType: PhaseType) {
         }
     }
 
+    /**
+     * get the icon associated with a phase (used when creating the options menu)
+     * @return drawable
+     */
     fun getIcon(phase: PhaseType = phaseType) : Int {
         return when (phase){
             PhaseType.LEARN -> R.drawable.ic_ear_speak
@@ -46,6 +60,30 @@ class Phase(val phaseType: PhaseType) {
         }
     }
 
+    /**
+     * get the color associated with a phase
+     * @return color
+     */
+    fun getColor() : Int {
+        return when(phaseType){
+            PhaseType.LEARN -> R.color.learn_phase
+            PhaseType.DRAFT -> R.color.draft_phase
+            PhaseType.COMMUNITY_CHECK -> R.color.comunity_check_phase
+            PhaseType.CONSULTANT_CHECK -> R.color.consultant_check_phase
+            PhaseType.DRAMATIZATION -> R.color.dramatization_phase
+            PhaseType.CREATE -> R.color.create_phase
+            PhaseType.SHARE -> R.color.share_phase
+            PhaseType.BACKT -> R.color.backT_phase
+            PhaseType.WHOLE_STORY -> R.color.whole_story_phase
+            PhaseType.REMOTE_CHECK -> R.color.remote_check_phase
+            else -> R.color.black
+        }
+    }
+
+    /**
+     * get path of audio file needed by slide, based on the current phase (narration or a draft)
+     * @return String
+     */
     fun getReferenceAudioFile(slideNum: Int = Workspace.activeSlideNum) : String {
         val filename = when (phaseType){
             PhaseType.DRAFT -> Workspace.activeStory.slides[slideNum].narrationFile
@@ -58,6 +96,10 @@ class Phase(val phaseType: PhaseType) {
         return Story.getFilename(filename)
     }
 
+    /**
+     * get displayable name for a phase
+     * @return String
+     */
     fun getPrettyName() : String {
         return when (phaseType) {
             PhaseType.LEARN -> "Learn"
@@ -101,26 +143,11 @@ class Phase(val phaseType: PhaseType) {
             else -> phaseType.toString().toLowerCase()
         }
     }
-    /**
-     * get the color for the phase
-     * @return return the color
-     */
-    fun getColor() : Int {
-        return when(phaseType){
-            PhaseType.LEARN -> R.color.learn_phase
-            PhaseType.DRAFT -> R.color.draft_phase
-            PhaseType.COMMUNITY_CHECK -> R.color.comunity_check_phase
-            PhaseType.CONSULTANT_CHECK -> R.color.consultant_check_phase
-            PhaseType.DRAMATIZATION -> R.color.dramatization_phase
-            PhaseType.CREATE -> R.color.create_phase
-            PhaseType.SHARE -> R.color.share_phase
-            PhaseType.BACKT -> R.color.backT_phase
-            PhaseType.WHOLE_STORY -> R.color.whole_story_phase
-            PhaseType.REMOTE_CHECK -> R.color.remote_check_phase
-            else -> R.color.black
-        }
-    }
 
+    /**
+     * get the activity class of a phase (some based on the PagerBaseActivity)
+     * @return class
+     */
     fun getTheClass() : Class<*> {
         return when(phaseType){
             PhaseType.WORKSPACE -> RegistrationActivity::class.java
