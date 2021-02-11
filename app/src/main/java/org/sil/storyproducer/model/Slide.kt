@@ -36,11 +36,11 @@ class Slide{
     var translatedContent: String = ""
 
     //recorded audio files
-    var draftAudioFiles: MutableList<String> = ArrayList()
+    var translateReviseAudioFiles: MutableList<String> = ArrayList()
     var chosenDraftFile = ""
-    var communityCheckAudioFiles: MutableList<String> = ArrayList()
+    var communityWorkAudioFiles: MutableList<String> = ArrayList()
     var consultantCheckAudioFiles: MutableList<String> = ArrayList()
-    var dramatizationAudioFiles: MutableList<String> = ArrayList()
+    var voiceStudioAudioFiles: MutableList<String> = ArrayList()
     var chosenDramatizationFile = ""
     var backTranslationAudioFiles: MutableList<String> = ArrayList()
     var chosenBackTranslationFile = ""

@@ -34,8 +34,8 @@ internal class LogListAdapter(private val context: Context, slide: Int) : BaseAd
         for (le in allEntries) {
             when(le.phase.phaseType){
                 PhaseType.LEARN -> if(learn) displayEntries.add(le)
-                PhaseType.DRAFT -> if(draft) displayEntries.add(le)
-                PhaseType.COMMUNITY_CHECK -> if(comCheck) displayEntries.add(le)
+                PhaseType.TRANSLATE_REVISE -> if(draft) displayEntries.add(le)
+                PhaseType.COMMUNITY_WORK -> if(comCheck) displayEntries.add(le)
                 else -> {}
             }
         }
@@ -66,7 +66,7 @@ internal class LogListAdapter(private val context: Context, slide: Int) : BaseAd
 
         val entry = getItem(position)
         date.text = entry.dateTimeString
-        info.text = "${entry.phase.getPrettyName()} - ${entry.description}"
+        info.text = "${entry.phase.getDisplayName()} - ${entry.description}"
         cView.setBackgroundColor(ContextCompat.getColor(context, entry.phase.getColor()))
 
         return cView
