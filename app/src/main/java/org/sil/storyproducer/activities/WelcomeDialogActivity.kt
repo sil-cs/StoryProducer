@@ -1,4 +1,4 @@
-package org.sil.storyproducer.activity
+package org.sil.storyproducer.activities
 
 import android.app.AlertDialog
 import android.os.Build

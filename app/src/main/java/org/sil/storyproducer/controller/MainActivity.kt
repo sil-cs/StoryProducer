@@ -19,7 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.sil.storyproducer.R
-import org.sil.storyproducer.activity.BaseActivity
+import org.sil.storyproducer.activities.BaseActivity
 import org.sil.storyproducer.model.Phase
 import org.sil.storyproducer.model.PhaseType
 import org.sil.storyproducer.model.Story
