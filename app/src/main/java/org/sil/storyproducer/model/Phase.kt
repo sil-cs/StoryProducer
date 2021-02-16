@@ -3,7 +3,7 @@ package org.sil.storyproducer.model
 import org.sil.storyproducer.R
 import org.sil.storyproducer.controller.MainActivity
 import org.sil.storyproducer.controller.RegistrationActivity
-import org.sil.storyproducer.controller.export.CreateActivity
+import org.sil.storyproducer.controller.export.FinalizeActivity
 import org.sil.storyproducer.controller.export.ShareActivity
 import org.sil.storyproducer.controller.learn.LearnActivity
 import org.sil.storyproducer.controller.pager.PagerBaseActivity
@@ -140,7 +140,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.COMMUNITY_WORK -> PagerBaseActivity::class.java
             PhaseType.ACCURACY_CHECK -> PagerBaseActivity::class.java
             PhaseType.VOICE_STUDIO -> PagerBaseActivity::class.java
-            PhaseType.FINALIZE -> CreateActivity::class.java
+            PhaseType.FINALIZE -> FinalizeActivity::class.java
             PhaseType.SHARE -> ShareActivity::class.java
             PhaseType.BACK_TRANSLATION -> PagerBaseActivity::class.java
             PhaseType.WHOLE_STORY -> WholeStoryBackTranslationActivity::class.java
