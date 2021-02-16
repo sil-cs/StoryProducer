@@ -20,7 +20,7 @@ import org.sil.storyproducer.tools.media.story.AutoStoryMaker
 import org.sil.storyproducer.tools.stripForFilename
 
 
-class CreateActivity : PhaseBaseActivity() {
+class FinalizeActivity : PhaseBaseActivity() {
 
     private lateinit var mEditTextTitle: EditText
     private lateinit var mLayoutConfiguration: View
@@ -447,7 +447,7 @@ class CreateActivity : PhaseBaseActivity() {
     }
 
     companion object {
-        private val TAG = "CreateActivity"
+        private val TAG = "FinalizeActivity"
 
         private val BUTTON_LOCK_DURATION_MS: Long = 1000
         private val PROGRESS_MAX = 1000
