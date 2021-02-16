@@ -20,7 +20,7 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.GravityCompat
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.sil.storyproducer.R
-import org.sil.storyproducer.activity.BaseActivity
+import org.sil.storyproducer.activities.BaseActivity
 import org.sil.storyproducer.model.Phase
 import org.sil.storyproducer.model.Story
 import org.sil.storyproducer.model.Workspace
