@@ -110,18 +110,34 @@ class Phase (val phaseType: PhaseType) {
      * get name used for storing audio files
      * @return String
      */
-    fun getFileSafeName() : String {
+    fun getDirectoryName() : String {
         return when (phaseType) {
-            PhaseType.LEARN -> "Learn"
-            PhaseType.TRANSLATE_REVISE -> "TranslateRevise"
-            PhaseType.COMMUNITY_WORK -> "CommunityWork"
-            PhaseType.ACCURACY_CHECK -> "AccuracyCheck"
-            PhaseType.VOICE_STUDIO -> "VoiceStudio"
+            PhaseType.TRANSLATE_REVISE -> "Translation Draft"
+            PhaseType.COMMUNITY_WORK -> "Comment"
+            PhaseType.ACCURACY_CHECK -> "Accuracy"
+            PhaseType.VOICE_STUDIO -> "Studio Recording"
             PhaseType.FINALIZE -> "Finalize"
-            PhaseType.SHARE -> "Share"
-            PhaseType.BACK_T -> "BackTranslation"
-            PhaseType.WHOLE_STORY -> "WholeStory"
-            PhaseType.REMOTE_CHECK -> "RemoteCheck"
+            PhaseType.BACK_T -> "BackTrans"
+            PhaseType.WHOLE_STORY -> "Whole"
+            PhaseType.REMOTE_CHECK -> "Remote"
+            else -> phaseType.toString().toLowerCase()
+        }
+    }
+
+    /**
+     * get name used for storing audio files (short)
+     * @return String
+     */
+    fun getShortDirectoryName() : String {
+        return when (phaseType) {
+            PhaseType.TRANSLATE_REVISE -> "Translate"
+            PhaseType.COMMUNITY_WORK -> "Community"
+            PhaseType.ACCURACY_CHECK -> "Accuracy"
+            PhaseType.VOICE_STUDIO -> "VStudio"
+            PhaseType.FINALIZE -> "Finalize"
+            PhaseType.BACK_T -> "BackTrans"
+            PhaseType.WHOLE_STORY -> "Whole"
+            PhaseType.REMOTE_CHECK -> "Remote"
             else -> phaseType.toString().toLowerCase()
         }
     }
