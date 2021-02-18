@@ -166,7 +166,7 @@ abstract class PhaseBaseActivity : BaseActivity(), AdapterView.OnItemSelectedLis
             }
             R.id.helpButton -> {
                 val alert = AlertDialog.Builder(this)
-                alert.setTitle("${Workspace.activePhase.getDisplayName()} Help")
+                alert.setTitle("${Workspace.activePhase.getPrettyName()} Help")
 
                 val wv = WebView(this)
                 val iStream = assets.open(Phase.getHelpName(Workspace.activePhase.phaseType))
