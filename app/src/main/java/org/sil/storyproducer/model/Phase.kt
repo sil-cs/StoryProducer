@@ -87,57 +87,48 @@ class Phase (val phaseType: PhaseType) {
     }
 
     /**
-     * get displayable name for a phase (used to create option menu help dialog and logging)
-     * @return String
+     * TODO: refactor
+     * the following 3 functions are used when displaying the phase names and creating paths to store audio files
+     * (see Issue #547 for conversation on fix)
      */
-    fun getDisplayName() : String {
+    fun getPrettyName() : String {
         return when (phaseType) {
             PhaseType.LEARN -> "Learn"
             PhaseType.TRANSLATE_REVISE -> "Translate + Revise"
-            PhaseType.COMMUNITY_WORK -> "Community Work"
-            PhaseType.ACCURACY_CHECK -> "Accuracy Check"
-            PhaseType.VOICE_STUDIO -> "Voice Studio"
             PhaseType.FINALIZE -> "Finalize"
             PhaseType.SHARE -> "Share"
-            PhaseType.BACK_T -> "Back Translation"
+            PhaseType.COMMUNITY_WORK -> "Community Work"
+            PhaseType.ACCURACY_CHECK -> "Accuracy Check"
             PhaseType.WHOLE_STORY -> "Whole Story"
             PhaseType.REMOTE_CHECK -> "Remote Check"
+            PhaseType.BACK_T -> "Back Translation"
+            PhaseType.VOICE_STUDIO -> "Voice Studio"
             else -> phaseType.toString().toLowerCase()
         }
     }
-
-    /**
-     * get name used for storing audio files
-     * @return String
-     */
-    fun getDirectoryName() : String {
+    fun getDisplayName() : String {
         return when (phaseType) {
             PhaseType.TRANSLATE_REVISE -> "Translation Draft"
             PhaseType.COMMUNITY_WORK -> "Comment"
             PhaseType.ACCURACY_CHECK -> "Accuracy"
-            PhaseType.VOICE_STUDIO -> "Studio Recording"
-            PhaseType.FINALIZE -> "Finalize"
-            PhaseType.BACK_T -> "BackTrans"
             PhaseType.WHOLE_STORY -> "Whole"
             PhaseType.REMOTE_CHECK -> "Remote"
+            PhaseType.BACK_T -> "BackTrans"
+            PhaseType.VOICE_STUDIO -> "Studio Recording"
+            PhaseType.FINALIZE -> "Finalize"
             else -> phaseType.toString().toLowerCase()
         }
     }
-
-    /**
-     * get name used for storing audio files (short)
-     * @return String
-     */
-    fun getShortDirectoryName() : String {
+    fun getShortName() : String {
         return when (phaseType) {
             PhaseType.TRANSLATE_REVISE -> "Translate"
             PhaseType.COMMUNITY_WORK -> "Community"
             PhaseType.ACCURACY_CHECK -> "Accuracy"
-            PhaseType.VOICE_STUDIO -> "VStudio"
-            PhaseType.FINALIZE -> "Finalize"
-            PhaseType.BACK_T -> "BackTrans"
             PhaseType.WHOLE_STORY -> "Whole"
             PhaseType.REMOTE_CHECK -> "Remote"
+            PhaseType.BACK_T -> "BackTrans"
+            PhaseType.VOICE_STUDIO -> "VStudio"
+            PhaseType.FINALIZE -> "Finalize"
             else -> phaseType.toString().toLowerCase()
         }
     }
