@@ -38,7 +38,7 @@ class PagerAdapter(fm: FragmentManager) : androidx.fragment.app.FragmentStatePag
             PhaseType.VOICE_STUDIO -> {
                 fragment = VoiceStudioFrag()
             }
-//            PhaseType.BACK_TRANSLATION -> {
+//            PhaseType.BACK_T -> {
 //                fragment = BackTranslationFrag()
 //            }
             PhaseType.REMOTE_CHECK -> {

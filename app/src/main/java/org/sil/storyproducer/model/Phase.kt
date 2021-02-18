@@ -20,7 +20,7 @@ enum class PhaseType {
     VOICE_STUDIO,
     FINALIZE,
     SHARE,
-    BACK_TRANSLATION,
+    BACK_T,
     WHOLE_STORY,
     REMOTE_CHECK
 }
@@ -44,7 +44,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.ACCURACY_CHECK -> R.drawable.ic_school_white_48dp
             PhaseType.WHOLE_STORY -> R.drawable.ic_school_white_48dp
             PhaseType.REMOTE_CHECK -> R.drawable.ic_school_white_48dp
-            PhaseType.BACK_TRANSLATION -> R.drawable.ic_headset_mic_white_48dp
+            PhaseType.BACK_T -> R.drawable.ic_headset_mic_white_48dp
             PhaseType.VOICE_STUDIO -> R.drawable.ic_mic_box_48dp
             else -> R.drawable.ic_mic_white_48dp
         }
@@ -63,7 +63,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.VOICE_STUDIO -> R.color.voice_studio_phase
             PhaseType.FINALIZE -> R.color.finalize_phase
             PhaseType.SHARE -> R.color.share_phase
-            PhaseType.BACK_TRANSLATION -> R.color.backT_phase
+            PhaseType.BACK_T -> R.color.backT_phase
             PhaseType.WHOLE_STORY -> R.color.whole_story_phase
             PhaseType.REMOTE_CHECK -> R.color.remote_check_phase
             else -> R.color.black
@@ -80,7 +80,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.COMMUNITY_WORK -> Workspace.activeStory.slides[slideNum].chosenDraftFile
             PhaseType.ACCURACY_CHECK -> Workspace.activeStory.slides[slideNum].chosenDraftFile
             PhaseType.VOICE_STUDIO -> Workspace.activeStory.slides[slideNum].chosenDraftFile
-            PhaseType.BACK_TRANSLATION -> Workspace.activeStory.slides[slideNum].chosenDraftFile
+            PhaseType.BACK_T -> Workspace.activeStory.slides[slideNum].chosenDraftFile
             else -> ""
         }
         return Story.getFilename(filename)
@@ -99,7 +99,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.VOICE_STUDIO -> "Voice Studio"
             PhaseType.FINALIZE -> "Finalize"
             PhaseType.SHARE -> "Share"
-            PhaseType.BACK_TRANSLATION -> "Back Translation"
+            PhaseType.BACK_T -> "Back Translation"
             PhaseType.WHOLE_STORY -> "Whole Story"
             PhaseType.REMOTE_CHECK -> "Remote Check"
             else -> phaseType.toString().toLowerCase()
@@ -119,7 +119,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.VOICE_STUDIO -> "VoiceStudio"
             PhaseType.FINALIZE -> "Finalize"
             PhaseType.SHARE -> "Share"
-            PhaseType.BACK_TRANSLATION -> "BackTranslation"
+            PhaseType.BACK_T -> "BackTranslation"
             PhaseType.WHOLE_STORY -> "WholeStory"
             PhaseType.REMOTE_CHECK -> "RemoteCheck"
             else -> phaseType.toString().toLowerCase()
@@ -142,7 +142,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.VOICE_STUDIO -> PagerBaseActivity::class.java
             PhaseType.FINALIZE -> FinalizeActivity::class.java
             PhaseType.SHARE -> ShareActivity::class.java
-            PhaseType.BACK_TRANSLATION -> PagerBaseActivity::class.java
+            PhaseType.BACK_T -> PagerBaseActivity::class.java
             PhaseType.WHOLE_STORY -> WholeStoryBackTranslationActivity::class.java
             PhaseType.REMOTE_CHECK -> PagerBaseActivity::class.java
         }
@@ -157,7 +157,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.TRANSLATE_REVISE -> Workspace.activeStory.slides[slideNum].translateReviseAudioFiles
             PhaseType.COMMUNITY_WORK -> Workspace.activeStory.slides[slideNum].communityWorkAudioFiles
             PhaseType.VOICE_STUDIO -> Workspace.activeStory.slides[slideNum].voiceStudioAudioFiles
-            PhaseType.BACK_TRANSLATION -> Workspace.activeStory.slides[slideNum].backTranslationAudioFiles
+            PhaseType.BACK_T -> Workspace.activeStory.slides[slideNum].backTranslationAudioFiles
             else -> null
         }
     }
@@ -214,7 +214,7 @@ class Phase (val phaseType: PhaseType) {
                     Phase(PhaseType.TRANSLATE_REVISE),
                     Phase(PhaseType.COMMUNITY_WORK),
                     Phase(PhaseType.WHOLE_STORY),
-                    Phase(PhaseType.BACK_TRANSLATION),
+                    Phase(PhaseType.BACK_T),
                     Phase(PhaseType.REMOTE_CHECK),
                     Phase(PhaseType.VOICE_STUDIO),
                     Phase(PhaseType.FINALIZE),

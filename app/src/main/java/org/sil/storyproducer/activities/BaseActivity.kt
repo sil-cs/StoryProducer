@@ -17,7 +17,6 @@ import org.sil.storyproducer.controller.BaseController
 import org.sil.storyproducer.controller.MainActivity
 import org.sil.storyproducer.controller.RegistrationActivity
 import org.sil.storyproducer.controller.SelectTemplatesFolderController
-import org.sil.storyproducer.controller.SelectTemplatesFolderController.Companion.SELECT_TEMPLATES_FOLDER
 import org.sil.storyproducer.controller.SelectTemplatesFolderController.Companion.SELECT_TEMPLATES_FOLDER_REQUEST_CODES
 import org.sil.storyproducer.controller.SelectTemplatesFolderController.Companion.UPDATE_TEMPLATES_FOLDER
 import org.sil.storyproducer.model.Workspace
@@ -65,11 +64,6 @@ open class BaseActivity : AppCompatActivity(), BaseActivityView {
     private fun showWelcomeDialog() {
         startActivity(Intent(this, WelcomeDialogActivity::class.java))
         finish()
-    }
-
-    // no longer used
-    fun selectTemplatesFolder() {
-        controller.openDocumentTree(SELECT_TEMPLATES_FOLDER)
     }
 
     fun updateTemplatesFolder() {

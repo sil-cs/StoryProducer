@@ -36,7 +36,7 @@ fun getChosenCombName(slideNum: Int = Workspace.activeSlideNum): String {
         PhaseType.LEARN -> Workspace.activeStory.learnAudioFile
         PhaseType.TRANSLATE_REVISE -> Workspace.activeStory.slides[slideNum].chosenDraftFile
         PhaseType.VOICE_STUDIO -> Workspace.activeStory.slides[slideNum].chosenDramatizationFile
-        PhaseType.BACK_TRANSLATION -> Workspace.activeStory.slides[slideNum].chosenBackTranslationFile
+        PhaseType.BACK_T -> Workspace.activeStory.slides[slideNum].chosenBackTranslationFile
         else -> ""
     }
 }
@@ -51,7 +51,7 @@ fun setChosenFileIndex(index: Int, slideNum: Int = Workspace.activeSlideNum){
     when(Workspace.activePhase.phaseType){
         PhaseType.TRANSLATE_REVISE -> Workspace.activeStory.slides[slideNum].chosenDraftFile = combName
         PhaseType.VOICE_STUDIO -> Workspace.activeStory.slides[slideNum].chosenDramatizationFile = combName
-        PhaseType.BACK_TRANSLATION -> Workspace.activeStory.slides[slideNum].chosenBackTranslationFile = combName
+        PhaseType.BACK_T -> Workspace.activeStory.slides[slideNum].chosenBackTranslationFile = combName
         else -> return
     }
     return
