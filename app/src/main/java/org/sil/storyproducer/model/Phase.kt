@@ -8,7 +8,7 @@ import org.sil.storyproducer.controller.export.ShareActivity
 import org.sil.storyproducer.controller.learn.LearnActivity
 import org.sil.storyproducer.controller.pager.PagerBaseActivity
 import org.sil.storyproducer.controller.remote.WholeStoryBackTranslationActivity
-
+import org.sil.storyproducer.controller.wordlink.WordLinkActivity
 
 enum class PhaseType {
     WORKSPACE,
@@ -18,13 +18,13 @@ enum class PhaseType {
     TRANSLATE_REVISE,
     WORD_LINKS,
     COMMUNITY_WORK,
+    WHOLE_STORY,
+    BACK_T,
+    REMOTE_CHECK,
     ACCURACY_CHECK,
     VOICE_STUDIO,
     FINALIZE,
-    SHARE,
-    BACK_T,
-    WHOLE_STORY,
-    REMOTE_CHECK
+    SHARE
 }
 
 /**
@@ -39,15 +39,15 @@ class Phase (val phaseType: PhaseType) {
     fun getIcon(phase: PhaseType = phaseType) : Int {
         return when (phase){
             PhaseType.LEARN -> R.drawable.ic_ear_speak
-            PhaseType.DRAFT -> R.drawable.ic_mic_white_48dp
-            PhaseType.CREATE -> R.drawable.ic_video_call_white_48dp
-            PhaseType.SHARE -> R.drawable.ic_share_white_48dp
-            PhaseType.COMMUNITY_CHECK -> R.drawable.ic_people_white_48dp
-            PhaseType.CONSULTANT_CHECK -> R.drawable.ic_school_white_48dp
+            PhaseType.TRANSLATE_REVISE -> R.drawable.ic_mic_white_48dp
+            PhaseType.FINALIZE -> R.drawable.ic_video_call_white_48dp
+            PhaseType.SHARE -> R.drawable.ic_share_icon_v2_white
+            PhaseType.COMMUNITY_WORK -> R.drawable.ic_people_white_48dp
+            PhaseType.ACCURACY_CHECK -> R.drawable.ic_school_white_48dp
             PhaseType.WHOLE_STORY -> R.drawable.ic_school_white_48dp
             PhaseType.REMOTE_CHECK -> R.drawable.ic_school_white_48dp
-            PhaseType.BACKT -> R.drawable.ic_headset_mic_white_48dp
-            PhaseType.DRAMATIZATION -> R.drawable.ic_mic_box_48dp
+            PhaseType.BACK_T -> R.drawable.ic_headset_mic_white_48dp
+            PhaseType.VOICE_STUDIO -> R.drawable.ic_mic_box_48dp
             else -> R.drawable.ic_mic_white_48dp
         }
     }
@@ -122,6 +122,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.STORY_LIST -> MainActivity::class.java
             PhaseType.LEARN -> LearnActivity::class.java
             PhaseType.TRANSLATE_REVISE -> PagerBaseActivity::class.java
+            PhaseType.WORD_LINKS -> WordLinkActivity::class.java
             PhaseType.COMMUNITY_WORK -> PagerBaseActivity::class.java
             PhaseType.ACCURACY_CHECK -> PagerBaseActivity::class.java
             PhaseType.VOICE_STUDIO -> PagerBaseActivity::class.java
