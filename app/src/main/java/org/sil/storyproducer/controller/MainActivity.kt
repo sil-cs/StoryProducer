@@ -15,7 +15,10 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabItem
+import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.sil.storyproducer.R
@@ -34,6 +37,13 @@ class MainActivity : BaseActivity(), Serializable {
 
     private var mDrawerLayout: DrawerLayout? = null
 
+    //Filter variables starts.
+    lateinit var filterTabs: TabLayout
+    lateinit var pageAdapter: FilterPageAdapter
+    lateinit var allTab: TabItem
+    lateinit var progressTab: TabItem
+    lateinit var completeTab: TabItem
+
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (!ConnectivityStatus.isConnected(context)) {
@@ -51,13 +61,18 @@ class MainActivity : BaseActivity(), Serializable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        storyList = StoryListFrag()
+        storyList = StoryListFrag(0)
+
+        filterTabs = findViewById(R.id.Filter_Tabs)
+        completeTab = findViewById(R.id.Completed_Tab)
+        progressTab = findViewById(R.id.Progress_Tab)
+        allTab = findViewById(R.id.All_Stories_Tab)
+        pageAdapter = FilterPageAdapter(filterTabs.tabCount, supportFragmentManager)
+
         setContentView(R.layout.activity_main)
         setupDrawer()
 
-        if (!Workspace.isInitialized) {
-            initWorkspace()
-        }
+        if (!Workspace.isInitialized) {initWorkspace()}
 
         GlobalScope.launch {
             runOnUiThread {
@@ -66,6 +81,7 @@ class MainActivity : BaseActivity(), Serializable {
             }
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_with_help, menu)
