@@ -55,7 +55,7 @@ object Workspace{
     val activeDir: String = PROJECT_DIR
     val activeFilenameRoot: String
     get() {
-        return "${activePhase.getShortName()}${ Workspace.activeSlideNum }"
+        return "${activePhase.getFileSafeName()}${ Workspace.activeSlideNum }"
     }
 
     var activeSlideNum: Int = -1
