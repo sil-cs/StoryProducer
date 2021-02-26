@@ -29,13 +29,13 @@ internal class LogListAdapter(private val context: Context, slide: Int) : BaseAd
         displayEntries = allEntries
     }
 
-    fun updateList(learn: Boolean, draft: Boolean, comCheck: Boolean) {
+    fun updateList(learn: Boolean, transRevise: Boolean, commWork: Boolean) {
         displayEntries = ArrayList()
         for (le in allEntries) {
             when(le.phase.phaseType){
                 PhaseType.LEARN -> if(learn) displayEntries.add(le)
-                PhaseType.TRANSLATE_REVISE -> if(draft) displayEntries.add(le)
-                PhaseType.COMMUNITY_WORK -> if(comCheck) displayEntries.add(le)
+                PhaseType.TRANSLATE_REVISE -> if(transRevise) displayEntries.add(le)
+                PhaseType.COMMUNITY_WORK -> if(commWork) displayEntries.add(le)
                 else -> {}
             }
         }
