@@ -178,6 +178,7 @@
     <string name="wordlink_fill_with_audio_comment">Fill with Audio Comment</string>
     <string name="wordlink_backtranslation">Backtranslation</string>
     <string name="wordlink_none">None</string>
+    <string name="wordlink_list_help">None</string>
 
     <!-- Dramatization phase -->
     <string name="dramatization_edit_text_hint">Write story text for videos with included text.</string>

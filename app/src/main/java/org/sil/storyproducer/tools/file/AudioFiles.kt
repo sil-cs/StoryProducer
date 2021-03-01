@@ -112,14 +112,14 @@ fun createRecordingCombinedName() : String {
     return when(Workspace.activePhase.phaseType) {
         //just one file.  Overwrite when you re-record.
         PhaseType.LEARN, PhaseType.WHOLE_STORY -> {
-            "${Workspace.activePhase.getDisplayName()}|$PROJECT_DIR/${Workspace.activePhase.getShortName()}$AUDIO_EXT"
+            "${Workspace.activePhase.getDirectorySafeName()}|$PROJECT_DIR/${Workspace.activePhase.getFileSafeName()}$AUDIO_EXT"
         }
         //Make new files every time.  Don't append.
         PhaseType.TRANSLATE_REVISE, PhaseType.COMMUNITY_WORK,
         PhaseType.VOICE_STUDIO, PhaseType.ACCURACY_CHECK -> {
             //find the next number that is available for saving files at.
             val names = getRecordedDisplayNames()
-            val rNameNum = "${Workspace.activePhase.getDisplayName()} ([0-9]+)".toRegex()
+            val rNameNum = "${Workspace.activePhase.getDirectorySafeName()} ([0-9]+)".toRegex()
             var maxNum = 0
             for (n in names!!){
                 try {
@@ -131,7 +131,7 @@ fun createRecordingCombinedName() : String {
                     FirebaseCrashlytics.getInstance().recordException(e)
                 }
             }
-            "${Workspace.activePhase.getDisplayName()} ${maxNum+1}|${Workspace.activeDir}/${Workspace.activeFilenameRoot}_${Date().time}$AUDIO_EXT"
+            "${Workspace.activePhase.getDirectorySafeName()} ${maxNum+1}|${Workspace.activeDir}/${Workspace.activeFilenameRoot}_${Date().time}$AUDIO_EXT"
         }
         else -> {""}
     }

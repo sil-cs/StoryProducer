@@ -26,7 +26,7 @@ internal const val SLIDE_NUM = "CurrentSlideNum"
 internal const val DEMO_FOLDER = "000 Unlocked demo story Storm"
 internal const val PHASE = "Phase"
 
-// constants for wordlinks feature
+// constants for Word Links
 internal const val WORDLINKS_DIR = "wordlinks"
 internal const val WORDLINKS_CSV_FILE = "wordlinks.csv"
 internal const val WORDLINKS_JSON_FILE = "wordlinks.json"
@@ -69,7 +69,7 @@ object Workspace {
         }
     val activeDirRoot: String
     get() {
-        return if (activePhase.phaseType == PhaseType.WORDLINK) {
+        return if (activePhase.phaseType == PhaseType.WORD_LINKS) {
             WORDLINKS_DIR
         } else {
             activeStory.title
@@ -78,7 +78,7 @@ object Workspace {
 
     val activeDir: String
     get() {
-        return if (activePhase.phaseType == PhaseType.WORDLINK) {
+        return if (activePhase.phaseType == PhaseType.WORD_LINKS) {
             activeWordLink.term
         } else {
             PROJECT_DIR
@@ -87,10 +87,10 @@ object Workspace {
 
     val activeFilenameRoot: String
     get() {
-        return if(activePhase.phaseType == PhaseType.WORDLINK) {
+        return if(activePhase.phaseType == PhaseType.WORD_LINKS) {
             activeWordLink.term
         } else {
-            return "${activePhase.getShortName()}${ activeSlideNum }"
+            return "${activePhase.getFileSafeName()}${ activeSlideNum }"
         }
     }
 
@@ -128,6 +128,9 @@ object Workspace {
             // Initiate new workspace path
             workdocfile = DocumentFile.fromTreeUri(context, uri)!!
             registration.load(context)
+
+            // load in the Word Links
+            importWordLinks(context)
         } catch (e: Exception) {
             Log.e("setupWorkspacePath", "Error setting up new workspace path!", e)
         }
