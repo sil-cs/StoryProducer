@@ -44,7 +44,7 @@
         android:text="NT" />
 
     <CheckBox
-        android:id="@+id/checkBox5"
+        android:id="@+id/FilmcheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

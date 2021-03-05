@@ -10,7 +10,7 @@ class FilterPageAdapter(var numOfTabs: Int, fm: FragmentManager): FragmentPagerA
         return numOfTabs
     }
 
-    override fun getItem(position: Int): Fragment {
-        return StoryListFrag(position)
+    override fun getItem(tabPosition: Int): StoryListFrag {
+        return StoryListFrag(tabPosition)
     }
 }

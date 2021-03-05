@@ -25,6 +25,8 @@ class Story(var title: String, val slides: List<Slide>){
     var lastSlideNum: Int = 0
     var importAppVersion = ""
     var localCredits = ""
+    //var storyType create get method.
+
 
     val shortTitle: String get() {
         val match = RE_TITLE_NUMBER.find(title)

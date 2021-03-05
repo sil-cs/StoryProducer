@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.FragmentManager
 import org.sil.storyproducer.R
 import org.sil.storyproducer.activity.BaseActivity
 import org.sil.storyproducer.model.Story
@@ -35,10 +36,9 @@ class StoryListFrag(var TabNum: Int): androidx.fragment.app.Fragment() {
             return view
         }
         //lfview created the fragment of the stories list item
-        //TODO learn how the list items get created: 2/21/2020 Claire
         val lfview = inflater.inflate(R.layout.activity_list_view, container, false)
 
-        adapter = ListAdapter(context!!, R.layout.story_list_item, Workspace.Stories)
+        adapter = ListAdapter(context!!, R.layout.story_list_item, Workspace.Stories)// Workspace.Stories.filter( follow example)
 
         val listView = lfview.findViewById<ListView>(R.id.story_list_view)
         // Assign adapter to ListView
@@ -47,8 +47,11 @@ class StoryListFrag(var TabNum: Int): androidx.fragment.app.Fragment() {
         //TODO remove "switchtostory" call.  That is still from the old template way.
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ -> (activity as MainActivity).switchToStory(Workspace.Stories[position]) }
 
-        //TODO add switch statement to control the tabs
-
+        //TODO add switch statement to control the tab
+//        if(TabNum==0){
+//            val toolbar = FilterToolbarFrag()
+//            fragManager.beginTransaction().add(R.id.filtertb_container,toolbar).commit()
+//        }
         //case one: return normal lfview
         //case two: return filterbar with progress stories
         //case three: return completed stories
