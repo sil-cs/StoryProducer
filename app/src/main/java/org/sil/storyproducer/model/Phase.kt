@@ -8,7 +8,7 @@ import org.sil.storyproducer.controller.export.ShareActivity
 import org.sil.storyproducer.controller.learn.LearnActivity
 import org.sil.storyproducer.controller.pager.PagerBaseActivity
 import org.sil.storyproducer.controller.remote.WholeStoryBackTranslationActivity
-import org.sil.storyproducer.controller.wordlink.WordLinkActivity
+import org.sil.storyproducer.controller.wordlink.WordLinksActivity
 
 enum class PhaseType {
     WORKSPACE,
@@ -164,7 +164,7 @@ class Phase (val phaseType: PhaseType) {
             PhaseType.STORY_LIST       -> MainActivity::class.java
             PhaseType.LEARN            -> LearnActivity::class.java
             PhaseType.TRANSLATE_REVISE -> PagerBaseActivity::class.java
-            PhaseType.WORD_LINKS       -> WordLinkActivity::class.java
+            PhaseType.WORD_LINKS       -> WordLinksActivity::class.java
             PhaseType.COMMUNITY_WORK   -> PagerBaseActivity::class.java
             PhaseType.WHOLE_STORY      -> WholeStoryBackTranslationActivity::class.java
             PhaseType.BACK_T           -> PagerBaseActivity::class.java

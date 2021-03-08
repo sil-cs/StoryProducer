@@ -23,6 +23,7 @@ import org.sil.storyproducer.R
 import org.sil.storyproducer.tools.dpToPx
 import org.sil.storyproducer.controller.adapter.RecordingsListAdapter
 import org.sil.storyproducer.model.*
+import org.sil.storyproducer.tools.file.toJson
 import org.sil.storyproducer.tools.toolbar.PlayBackRecordingToolbar
 import java.util.*
 
@@ -32,9 +33,9 @@ import java.util.*
  *
  * @since 3.0.4
  */
-class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMediaListener {
+class WordLinksActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMediaListener {
 
-    private lateinit var recordingToolbar : WordLinkRecordingToolbar
+    private lateinit var recordingToolbar : WordLinksRecordingToolbar
     private lateinit var displayList : RecordingsListAdapter.RecordingsListModal
     lateinit var bottomSheet: ConstraintLayout
     private val wordLinkHistory: Stack<String> = Stack()
@@ -44,7 +45,7 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
         setContentView(R.layout.activity_wordlink)
 
         Workspace.activePhase = Phase(PhaseType.WORD_LINKS)
-        val clickedTerm = intent.getStringExtra(WORDLINKS_CLICKED_TERM)
+        val clickedTerm = intent.getStringExtra(WORD_LINKS_CLICKED_TERM)
         Workspace.activeWordLink = Workspace.termToWordLinkMap[Workspace.termFormToTermMap[clickedTerm.toLowerCase()]]!!
         wordLinkHistory.push(clickedTerm)
 
@@ -147,8 +148,8 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
 
         // set up the toolbar
         val bundle = Bundle()
-        bundle.putInt(WORDLINKS_SLIDE_NUM, 0)
-        recordingToolbar = WordLinkRecordingToolbar()
+        bundle.putInt(WORD_LINKS_SLIDE_NUM, 0)
+        recordingToolbar = WordLinksRecordingToolbar()
         recordingToolbar.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.toolbar_for_recording_toolbar, recordingToolbar).commit()
     }
@@ -161,7 +162,7 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.closeWordLink -> {
-                // saveKeyterm()
+                saveWordLink()
                 if(intent.hasExtra(PHASE)) {
                     Workspace.activePhase = Phase(intent.getSerializableExtra(PHASE) as PhaseType)
                 }
@@ -236,7 +237,7 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
     }
 
     fun replaceActivityWordLink(term: String) {
-        // saveWordLink()
+        saveWordLink()
         // Set word link from link as active word link
         Workspace.activeWordLink = Workspace.termToWordLinkMap[Workspace.termFormToTermMap[term.toLowerCase()]]!!
         // Add new word link fragments to stack
@@ -247,11 +248,11 @@ class WordLinkActivity : AppCompatActivity(), PlayBackRecordingToolbar.ToolbarMe
     }
 
     /**
-     * Saves the active keyterm to the workspace and exports an up-to-date json file for all keyterms
+     * Saves the active word link to the workspace and exports an up-to-date json file for all word links
      **/
     private fun saveWordLink() {
-//        Workspace.termToWordLinkMap[Workspace.activeWordLink.term] = Workspace.activeWordLink
-//        val wordLinkList = WordLinkList(Workspace.termToWordLinkMap.values.toList())
-//        Thread(Runnable{ let { wordLinkList.toJson(it) } }).start()
+        Workspace.termToWordLinkMap[Workspace.activeWordLink.term] = Workspace.activeWordLink
+        val wordLinkList = WordLinkList(Workspace.termToWordLinkMap.values.toList())
+        Thread(Runnable{ let { wordLinkList.toJson(it) } }).start()
     }
 }

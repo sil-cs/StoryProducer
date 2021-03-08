@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.sil.storyproducer.R
 import org.sil.storyproducer.model.Workspace
 import org.sil.storyproducer.tools.hideKeyboard
@@ -19,13 +18,13 @@ import org.sil.storyproducer.tools.toolbar.MultiRecordRecordingToolbar
  * classes. The class overrides the multi-record playlist button to display a bottom sheet that
  * lists audio recordings instead of a modal that lists the audio recordings.
  */
-class WordLinkRecordingToolbar : MultiRecordRecordingToolbar() {
+class WordLinksRecordingToolbar : MultiRecordRecordingToolbar() {
     lateinit var bottomSheet: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        bottomSheet = (activity as WordLinkActivity).bottomSheet
+        bottomSheet = (activity as WordLinksActivity).bottomSheet
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

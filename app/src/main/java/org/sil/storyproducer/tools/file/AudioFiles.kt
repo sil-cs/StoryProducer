@@ -3,10 +3,8 @@ package org.sil.storyproducer.tools.file
 
 import android.content.Context
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import org.sil.storyproducer.model.*
 import org.sil.storyproducer.model.PROJECT_DIR
-import org.sil.storyproducer.model.PhaseType
-import org.sil.storyproducer.model.Story
-import org.sil.storyproducer.model.Workspace
 import java.util.*
 import kotlin.math.max
 
@@ -35,6 +33,7 @@ fun getChosenCombName(slideNum: Int = Workspace.activeSlideNum): String {
     return when (Workspace.activePhase.phaseType) {
         PhaseType.LEARN -> Workspace.activeStory.learnAudioFile
         PhaseType.TRANSLATE_REVISE -> Workspace.activeStory.slides[slideNum].chosenDraftFile
+        PhaseType.WORD_LINKS -> Workspace.activeWordLink.chosenWordLinkFile
         PhaseType.VOICE_STUDIO -> Workspace.activeStory.slides[slideNum].chosenDramatizationFile
         PhaseType.BACK_T -> Workspace.activeStory.slides[slideNum].chosenBackTranslationFile
         else -> ""
@@ -50,6 +49,7 @@ fun setChosenFileIndex(index: Int, slideNum: Int = Workspace.activeSlideNum){
 
     when(Workspace.activePhase.phaseType){
         PhaseType.TRANSLATE_REVISE -> Workspace.activeStory.slides[slideNum].chosenDraftFile = combName
+        PhaseType.WORD_LINKS -> Workspace.activeWordLink.chosenWordLinkFile = combName
         PhaseType.VOICE_STUDIO -> Workspace.activeStory.slides[slideNum].chosenDramatizationFile = combName
         PhaseType.BACK_T -> Workspace.activeStory.slides[slideNum].chosenBackTranslationFile = combName
         else -> return
@@ -111,12 +111,16 @@ fun createRecordingCombinedName() : String {
     //they are used for the stages that do that.
     return when(Workspace.activePhase.phaseType) {
         //just one file.  Overwrite when you re-record.
-        PhaseType.LEARN, PhaseType.WHOLE_STORY -> {
+        PhaseType.LEARN,
+        PhaseType.WHOLE_STORY -> {
             "${Workspace.activePhase.getDirectorySafeName()}|$PROJECT_DIR/${Workspace.activePhase.getFileSafeName()}$AUDIO_EXT"
         }
         //Make new files every time.  Don't append.
-        PhaseType.TRANSLATE_REVISE, PhaseType.COMMUNITY_WORK,
-        PhaseType.VOICE_STUDIO, PhaseType.ACCURACY_CHECK -> {
+        PhaseType.TRANSLATE_REVISE,
+        PhaseType.WORD_LINKS,
+        PhaseType.COMMUNITY_WORK,
+        PhaseType.VOICE_STUDIO,
+        PhaseType.ACCURACY_CHECK -> {
             //find the next number that is available for saving files at.
             val names = getRecordedDisplayNames()
             val rNameNum = "${Workspace.activePhase.getDirectorySafeName()} ([0-9]+)".toRegex()
@@ -153,6 +157,10 @@ fun addCombinedName(name:String){
         PhaseType.TRANSLATE_REVISE ->{
             Workspace.activeSlide!!.translateReviseAudioFiles.add(0,name)
             Workspace.activeSlide!!.chosenDraftFile = name
+        }
+        PhaseType.WORD_LINKS -> {
+            Workspace.activeWordLink.wordLinkRecordings.add(0, WordLinkRecording(name))
+            Workspace.activeWordLink.chosenWordLinkFile = name
         }
         PhaseType.VOICE_STUDIO -> {
             Workspace.activeSlide!!.voiceStudioAudioFiles.add(0,name)

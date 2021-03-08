@@ -179,6 +179,8 @@
     <string name="wordlink_backtranslation">Backtranslation</string>
     <string name="wordlink_none">None</string>
     <string name="wordlink_list_help">None</string>
+    <string name="wordlinks_csv_read_error">Error reading word links CSV file</string>
+    <string name="wordlinks_json_read_error">Error reading word links JSON file</string>
 
     <!-- Dramatization phase -->
     <string name="dramatization_edit_text_hint">Write story text for videos with included text.</string>

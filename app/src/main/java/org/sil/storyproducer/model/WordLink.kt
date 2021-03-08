@@ -8,16 +8,19 @@ import android.text.style.ClickableSpan
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.squareup.moshi.JsonClass
 import org.sil.storyproducer.R
-import org.sil.storyproducer.controller.wordlink.WordLinkActivity
+import org.sil.storyproducer.controller.wordlink.WordLinksActivity
 
 /**
- * A list of all the wordlinks (used for saving all wordlinks in a single file)
+ * A list of all the word links (used for saving all word links in a single file)
  **/
+@JsonClass(generateAdapter = true)
 class WordLinkList (val wordLinks: List<WordLink>) {
     companion object
 }
 
+@JsonClass(generateAdapter = true)
 data class WordLinkRecording (
     var audioRecordingFilename : String = "",
     var textBackTranslation : String = "",
@@ -25,6 +28,7 @@ data class WordLinkRecording (
         companion object
 }
 
+@JsonClass(generateAdapter = true)
 data class WordLink (
         var term: String = "",
         var termForms: List<String> = listOf(),
@@ -53,7 +57,7 @@ fun stringToWordLink (string: String, fragmentActivity: FragmentActivity?) : Spa
 }
 
 /**
- * Converts a string to a clickableSpan that will open the WordLinkActivity when clicked
+ * Converts a string to a clickableSpan that will open the WordLinksActivity when clicked
  *
  * @param term the wordlink
  * @param fragmentActivity the current activity
@@ -62,14 +66,14 @@ fun stringToWordLink (string: String, fragmentActivity: FragmentActivity?) : Spa
 private fun createWordLinkClickableSpan(term: String, fragmentActivity: FragmentActivity?): ClickableSpan {
     return object : ClickableSpan() {
         override fun onClick(textView: View) {
-            if (Workspace.activePhase.phaseType == PhaseType.WORD_LINKS && fragmentActivity is WordLinkActivity) {
+            if (Workspace.activePhase.phaseType == PhaseType.WORD_LINKS && fragmentActivity is WordLinksActivity) {
                 fragmentActivity.replaceActivityWordLink(term)
             }
             else if (Workspace.activePhase.phaseType != PhaseType.WORD_LINKS) {
                 //Start a new word links activity and keep a reference to the parent phase
-                val intent = Intent(fragmentActivity, WordLinkActivity::class.java)
+                val intent = Intent(fragmentActivity, WordLinksActivity::class.java)
                 intent.putExtra(PHASE, Workspace.activePhase.phaseType)
-                intent.putExtra(WORDLINKS_CLICKED_TERM, term)
+                intent.putExtra(WORD_LINKS_CLICKED_TERM, term)
                 fragmentActivity?.startActivity(intent)
             }
         }

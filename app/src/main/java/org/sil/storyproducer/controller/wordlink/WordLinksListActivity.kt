@@ -19,7 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import org.sil.storyproducer.R
 import org.sil.storyproducer.controller.MainActivity
 import org.sil.storyproducer.controller.RegistrationActivity
-import org.sil.storyproducer.model.WORDLINKS_CLICKED_TERM
+import org.sil.storyproducer.model.WORD_LINKS_CLICKED_TERM
 import org.sil.storyproducer.model.PHASE
 import org.sil.storyproducer.model.Workspace
 import org.sil.storyproducer.model.Workspace.termToWordLinkMap
@@ -165,9 +165,9 @@ class WordLinkListAdapter(private val wordLinkTerms: Array<String>, private val 
         val term = wordLinkTerms[position]
         wordLinkListViewHolder.item.findViewById<TextView>(android.R.id.text1).text = term
         wordLinkListViewHolder.item.setOnClickListener {
-            val intent = Intent(context , WordLinkActivity::class.java)
+            val intent = Intent(context , WordLinksActivity::class.java)
             intent.putExtra(PHASE, Workspace.activePhase.phaseType)
-            intent.putExtra(WORDLINKS_CLICKED_TERM, term)
+            intent.putExtra(WORD_LINKS_CLICKED_TERM, term)
             context.startActivity(intent)
         }
     }

@@ -3,13 +3,12 @@ package org.sil.storyproducer.tools.file
 
 import android.content.Context
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import org.sil.storyproducer.R
+import org.sil.storyproducer.model.WORD_LINKS_DIR
 import org.sil.storyproducer.model.Story
 import org.sil.storyproducer.model.Workspace
 import java.io.File
@@ -76,6 +75,10 @@ fun getDownsample(context: Context, relPath: String,
 fun getStoryChildOutputStream(context: Context, relPath: String, mimeType: String = "", dirRoot: String = Workspace.activeDirRoot) : OutputStream? {
     if (dirRoot == "") return null
     return getChildOutputStream(context, "$dirRoot/$relPath", mimeType)
+}
+
+fun getWordLinksChildOutputStream(context: Context, relPath: String, mimeType: String = "") : OutputStream? {
+    return getChildOutputStream(context, "$WORD_LINKS_DIR/$relPath", mimeType)
 }
 
 fun storyRelPathExists(context: Context, relPath: String, dirRoot: String = Workspace.activeDirRoot) : Boolean{

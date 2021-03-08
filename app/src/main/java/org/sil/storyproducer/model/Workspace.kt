@@ -1,6 +1,6 @@
 package org.sil.storyproducer.model
 
-import WordLinkCSVReader
+import WordLinksCSVReader
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,9 +13,7 @@ import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.sil.storyproducer.R
-import org.sil.storyproducer.tools.file.deleteWorkspaceFile
-import org.sil.storyproducer.tools.file.getChildOutputStream
-import org.sil.storyproducer.tools.file.workspaceRelPathExists
+import org.sil.storyproducer.tools.file.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
@@ -26,12 +24,11 @@ internal const val SLIDE_NUM = "CurrentSlideNum"
 internal const val DEMO_FOLDER = "000 Unlocked demo story Storm"
 internal const val PHASE = "Phase"
 
-// constants for Word Links
-internal const val WORDLINKS_DIR = "wordlinks"
-internal const val WORDLINKS_CSV_FILE = "wordlinks.csv"
-internal const val WORDLINKS_JSON_FILE = "wordlinks.json"
-internal const val WORDLINKS_CLICKED_TERM = "ClickedTerm"
-internal const val WORDLINKS_SLIDE_NUM = "CurrentSlideNum"
+internal const val WORD_LINKS_DIR = "wordlinks"
+internal const val WORD_LINKS_CSV_FILE = "wordlinks.csv"
+internal const val WORD_LINKS_JSON_FILE = "wordlinks.json"
+internal const val WORD_LINKS_CLICKED_TERM = "ClickedTerm"
+internal const val WORD_LINKS_SLIDE_NUM = "CurrentSlideNum"
 
 object Workspace {
     var workdocfile = DocumentFile.fromFile(File(""))
@@ -70,7 +67,7 @@ object Workspace {
     val activeDirRoot: String
     get() {
         return if (activePhase.phaseType == PhaseType.WORD_LINKS) {
-            WORDLINKS_DIR
+            WORD_LINKS_DIR
         } else {
             activeStory.title
         }
@@ -137,25 +134,25 @@ object Workspace {
     }
 
     private fun importWordLinks(context: Context) {
-        val wordLinksDir = workdocfile.findFile(WORDLINKS_DIR)
+        val wordLinksDir = workdocfile.findFile(WORD_LINKS_DIR)
         // check that word links directory exists
         if (wordLinksDir != null) {
             importWordLinksFromCSV(context, wordLinksDir)
-            // importKeytermsFromJsonFiles(context, keytermsDirectory)
+            importWordLinksFromJsonFiles(context, wordLinksDir)
             mapTermFormsToTerms()
             buildWLSTree()
         }
     }
 
     private fun importWordLinksFromCSV(context: Context, wordLinksDir: DocumentFile){
-        val wordLinksFile = wordLinksDir.findFile(WORDLINKS_CSV_FILE)
+        val wordLinksFile = wordLinksDir.findFile(WORD_LINKS_CSV_FILE)
         if (wordLinksFile != null) {
             try {
                 // open a raw file descriptor to access data under the URI
                 context.contentResolver.openFileDescriptor(wordLinksFile.uri, "r").use { pfd ->
                     ParcelFileDescriptor.AutoCloseInputStream(pfd).use { inputStream ->
                         InputStreamReader(inputStream).use { streamReader ->
-                            WordLinkCSVReader(streamReader).use { wordLinkCSVReader ->
+                            WordLinksCSVReader(streamReader).use { wordLinkCSVReader ->
                                 val wordLinks = wordLinkCSVReader.readAll()
                                 wordLinks.forEach { wl ->
                                     termToWordLinkMap[wl.term] = wl
@@ -166,7 +163,25 @@ object Workspace {
                 }
             }
             catch (exception: Exception) {
-                Toast.makeText(context, "Parsing wordlinks CSV file failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.wordlinks_csv_read_error, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun importWordLinksFromJsonFiles(context: Context, wordLinksDir: DocumentFile){
+        if(wordLinksDir.findFile(WORD_LINKS_JSON_FILE) != null) {
+            try {
+                wordLinkListFromJson(context)?.wordLinks?.forEach { wl ->
+                    if (termToWordLinkMap.containsKey(wl.term)) {
+                        termToWordLinkMap[wl.term]?.wordLinkRecordings = wl.wordLinkRecordings
+                        termToWordLinkMap[wl.term]?.chosenWordLinkFile = wl.chosenWordLinkFile
+                    } else {
+                        termToWordLinkMap[wl.term] = wl
+                    }
+                }
+            }
+            catch(exception: Exception) {
+                Toast.makeText(context, R.string.wordlinks_json_read_error, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -280,7 +295,7 @@ object Workspace {
     }
 
     fun goToNextPhase() : Boolean {
-        if(activePhaseIndex == -1) return false //phases not initizialized
+        if(activePhaseIndex == -1) return false //phases not initialized
         if(activePhaseIndex >= phases.size - 1) {
             activePhaseIndex = phases.size - 1
             return false
@@ -292,7 +307,7 @@ object Workspace {
     }
 
     fun goToPreviousPhase() : Boolean {
-        if(activePhaseIndex == -1) return false //phases not initizialized
+        if(activePhaseIndex == -1) return false //phases not initialized
         if(activePhaseIndex <= 0) {
             activePhaseIndex = 0
             return false
