@@ -28,7 +28,7 @@ class Registration{
         }
     }
     fun save(context: Context){
-        val oStream = getChildOutputStream(context,REGISTRATION_FILENAME,"")
+        val oStream = getChildOutputStream(context,REGISTRATION_FILENAME,"","wt")
         if(oStream != null) {
             try {
                 oStream.write(jsonData.toString(1).toByteArray(Charsets.UTF_8))

@@ -75,7 +75,7 @@ fun getDownsample(context: Context, relPath: String,
 
 fun getStoryChildOutputStream(context: Context, relPath: String, mimeType: String = "", dirRoot: String = Workspace.activeDirRoot) : OutputStream? {
     if (dirRoot == "") return null
-    return getChildOutputStream(context, "$dirRoot/$relPath", mimeType)
+    return getChildOutputStream(context, "$dirRoot/$relPath", mimeType,"wt")
 }
 
 fun storyRelPathExists(context: Context, relPath: String, dirRoot: String = Workspace.activeDirRoot) : Boolean{
@@ -124,8 +124,8 @@ fun getText(context: Context, relPath: String) : String? {
     return null
 }
 
-fun getChildOutputStream(context: Context, relPath: String, mimeType: String = "") : OutputStream? {
-    val pfd = getPFD(context, relPath, mimeType,"w")
+fun getChildOutputStream(context: Context, relPath: String, mimeType: String = "", mode: String = "w") : OutputStream? {
+    val pfd = getPFD(context, relPath, mimeType, mode)
     var oStream: OutputStream? = null
     try {
         oStream = ParcelFileDescriptor.AutoCloseOutputStream(pfd)
