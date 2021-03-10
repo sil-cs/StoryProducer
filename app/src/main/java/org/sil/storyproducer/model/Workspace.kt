@@ -182,8 +182,8 @@ object Workspace{
     fun getSongFilename() : String{
         for (s in activeStory.slides){
             if(s.slideType == SlideType.LOCALSONG){
-                if(s.chosenDramatizationFile != "") return s.chosenDramatizationFile
-                if(s.chosenDraftFile != "") return s.chosenDraftFile
+                if(s.chosenVoiceStudioFile != "") return s.chosenVoiceStudioFile
+                if(s.chosenTranslateReviseFile != "") return s.chosenTranslateReviseFile
             }
         }
         return ""

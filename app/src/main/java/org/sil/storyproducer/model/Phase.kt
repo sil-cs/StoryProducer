@@ -77,10 +77,10 @@ class Phase (val phaseType: PhaseType) {
     fun getReferenceAudioFile(slideNum: Int = Workspace.activeSlideNum) : String {
         val filename = when (phaseType){
             PhaseType.TRANSLATE_REVISE -> Workspace.activeStory.slides[slideNum].narrationFile
-            PhaseType.COMMUNITY_WORK   -> Workspace.activeStory.slides[slideNum].chosenDraftFile
-            PhaseType.BACK_T           -> Workspace.activeStory.slides[slideNum].chosenDraftFile
-            PhaseType.ACCURACY_CHECK   -> Workspace.activeStory.slides[slideNum].chosenDraftFile
-            PhaseType.VOICE_STUDIO     -> Workspace.activeStory.slides[slideNum].chosenDraftFile
+            PhaseType.COMMUNITY_WORK   -> Workspace.activeStory.slides[slideNum].chosenTranslateReviseFile
+            PhaseType.BACK_T           -> Workspace.activeStory.slides[slideNum].chosenTranslateReviseFile
+            PhaseType.ACCURACY_CHECK   -> Workspace.activeStory.slides[slideNum].chosenTranslateReviseFile
+            PhaseType.VOICE_STUDIO     -> Workspace.activeStory.slides[slideNum].chosenTranslateReviseFile
             else -> ""
         }
         return Story.getFilename(filename)

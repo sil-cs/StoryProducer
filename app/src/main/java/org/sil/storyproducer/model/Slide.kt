@@ -2,6 +2,7 @@ package org.sil.storyproducer.model
 
 import android.graphics.Rect
 import android.net.Uri
+import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.ToJson
@@ -35,14 +36,25 @@ class Slide{
     //translated text
     var translatedContent: String = ""
 
-    //recorded audio files
+    // recorded audio files
+    //
+    // use @SerializedName for legacy project.json files, vars can change as phase names change but
+    //  json keys will always be the original name for the phase
+    @SerializedName("draftAudioFiles")
     var translateReviseAudioFiles: MutableList<String> = ArrayList()
-    var chosenDraftFile = ""
+    @SerializedName("chosenDraftFile")
+    var chosenTranslateReviseFile = ""
+    @SerializedName("communityCheckAudioFiles")
     var communityWorkAudioFiles: MutableList<String> = ArrayList()
-    var consultantCheckAudioFiles: MutableList<String> = ArrayList()
+    @SerializedName("consultantCheckAudioFiles")
+    var accuracyCheckAudioFiles: MutableList<String> = ArrayList()
+    @SerializedName("dramatizationAudioFiles")
     var voiceStudioAudioFiles: MutableList<String> = ArrayList()
-    var chosenDramatizationFile = ""
+    @SerializedName("chosenDramatizationFile")
+    var chosenVoiceStudioFile = ""
+    @SerializedName("backTranslationAudioFiles")
     var backTranslationAudioFiles: MutableList<String> = ArrayList()
+    @SerializedName("chosenBackTranslationFile")
     var chosenBackTranslationFile = ""
 
     //consultant approval
