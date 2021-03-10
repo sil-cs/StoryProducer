@@ -2,7 +2,7 @@ package org.sil.storyproducer.model
 
 import android.graphics.Rect
 import android.net.Uri
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.ToJson
@@ -40,21 +40,21 @@ class Slide{
     //
     // use @SerializedName for legacy project.json files, vars can change as phase names change but
     //  json keys will always be the original name for the phase
-    @SerializedName("draftAudioFiles")
+    @Json(name="draftAudioFiles")
     var translateReviseAudioFiles: MutableList<String> = ArrayList()
-    @SerializedName("chosenDraftFile")
+    @Json(name="chosenDraftFile")
     var chosenTranslateReviseFile = ""
-    @SerializedName("communityCheckAudioFiles")
+    @Json(name="communityCheckAudioFiles")
     var communityWorkAudioFiles: MutableList<String> = ArrayList()
-    @SerializedName("consultantCheckAudioFiles")
+    @Json(name="consultantCheckAudioFiles")
     var accuracyCheckAudioFiles: MutableList<String> = ArrayList()
-    @SerializedName("dramatizationAudioFiles")
+    @Json(name="dramatizationAudioFiles")
     var voiceStudioAudioFiles: MutableList<String> = ArrayList()
-    @SerializedName("chosenDramatizationFile")
+    @Json(name="chosenDramatizationFile")
     var chosenVoiceStudioFile = ""
-    @SerializedName("backTranslationAudioFiles")
+    @Json(name="backTranslationAudioFiles")
     var backTranslationAudioFiles: MutableList<String> = ArrayList()
-    @SerializedName("chosenBackTranslationFile")
+    @Json(name="chosenBackTranslationFile")
     var chosenBackTranslationFile = ""
 
     //consultant approval
